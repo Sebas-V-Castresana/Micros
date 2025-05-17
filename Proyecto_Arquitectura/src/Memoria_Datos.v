@@ -27,7 +27,7 @@ input [31:0] Data_in,
 output reg [31:0] Data_out
     );
 
-    // Tamaño max va a ser de 32 bytes -> 32*8 = 256 bits
+    // TamaÃ±o max va a ser de 32 bytes -> 32*8 = 256 bits
     reg [7:0] Mem [31:0];
     
     // Se crean las celdas de memoria
