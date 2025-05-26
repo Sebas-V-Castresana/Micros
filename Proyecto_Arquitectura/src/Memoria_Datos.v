@@ -29,7 +29,7 @@ output [31:0] Data_out
     
     // El manejo de que se escriba un word (4 bytes) o 1 byte lo hace la CU
 
-    // Tamaño max va a ser de 24 bytes
+    // TamaÃ±o max va a ser de 24 bytes
     reg [7:0] Mem [23:0];
     
     // Se crean los 4 posibles Addrs
@@ -38,22 +38,8 @@ output [31:0] Data_out
     assign AddrsP1 = Addrs + 5'd1;
     assign AddrsP2 = Addrs + 5'd2;
     assign AddrsP3 = Addrs + 5'd3;
-    /*
-    // Banderas para controlar el enable de los registros individuales
-    wire flag0, flag1, flag2, flag3, flag4, flag5, flag6, flag7, flag8, flag9, flag10, flag11,
-    flag12, flag13, flag14, flag15, flag16, flag17, flag18, flag19, flag20, flag21, flag22, flag23;
     
-    assign flag0 = write_enable & (Addrs == 0);
-    assign flag1 = write_enable & ((Addrs == 1) | (Addrs == 0));
-    assign flag2 = write_enable & ((Addrs == 2) | (Addrs == 1) | (Addrs == 0));
-    assign flag3 = write_enable & ((Addrs == 3) | (Addrs == 2) | (Addrs == 1) | (Addrs == 0));
-    
-     
-    
-    assign Data_out[3:0] = {flag0, flag1, flag2, flag3};
-    
-    
-    // Se crean las celdas de memoria*/
+    // Se crean las celdas de memoria
     integer i;
     
     always @(posedge clk)
