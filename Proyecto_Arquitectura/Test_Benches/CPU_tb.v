@@ -26,6 +26,9 @@ reg clk, rst;
 reg [31:0] inst;
 wire [31:0] out;
 
+integer i, file;
+parameter SIZE = 32;
+
 CPU_top uut (clk, rst, inst, out);
 
 initial
@@ -59,6 +62,37 @@ inst = 32'h0000B037; // lui r0 0xB
 #50 inst = 32'h000A16A3; // sb r0 13(r1)
 #40 inst = 32'h00008013; // addi r0 r1 0 (li r0 0)
 #40 inst = 32'h00000113; // adadi r2 r0 0 (mv r2 r0)
+
+
+// Dump de Memoria
+file = $fopen ("Dump.txt","w");
+
+$fwrite(file, "Direccion    Valor en hexadecimal\n");
+
+for (i = 0; i < SIZE; i = i + 1)
+begin
+    if ((i & 'h3) == 'h0)
+    begin
+    $fwrite (file,"0x%h", i);
+    $fwrite (file,"       0x%h", uut.Datos.Mem[i]);
+    $display ("     0x%h\n", uut.Datos.Mem[i]);
+    end
+    
+    else if ((i & 'h3) == 'h3)
+    begin
+    $fwrite (file,"%h\n", uut.Datos.Mem[i]);
+    $display ("%h\n", uut.Datos.Mem[i]);
+    end
+    
+    else
+    begin
+    $fwrite (file,"%h", uut.Datos.Mem[i]);
+    $display ("%h", uut.Datos.Mem[i]);
+    end
+    
+end
+
+$fclose (file);
 
 end
 
