@@ -29,7 +29,8 @@ output [31:0] out
     wire [31:0] twelve_bits, vingt_bits;
     // Antes de extender se debe verificar si el num es neg o pos
     assign twelve_bits = inmediato[19] ? {inmediato[19], 20'b11111111111111111111, inmediato[18:8]} : {inmediato[19], 20'b0, inmediato[18:8]};
-    assign vingt_bits = inmediato[19] ? {inmediato[19:0], 12'b111111111111} : {inmediato[19:0], 12'b0};
+    // Al tener InmSrc en alto se carga el inmediato de 20 bits en la parte superior y se completa con 0
+    assign vingt_bits = {inmediato[19:0], 12'b0};
     
     assign out = ImnSrc ? vingt_bits : twelve_bits;
     
