@@ -22,7 +22,6 @@
 
 module CPU_top(
 input clk, rst,
-input [31:0] inst,
 output [31:0] out
     );
     
@@ -50,6 +49,10 @@ output [31:0] out
     end
     
     // Memoria de Instrucciones
+    wire [31:0] inst;
+    
+    MemoriaInstrucciones Instrucciones (PC, inst);
+    
     always @(posedge clk)
     begin
     if (rst)
