@@ -23,7 +23,7 @@
 module Unidad_Control(
 input clk, rst,
 input [31:0] inst, 
-output AluControl, InstW, MemW, RegW, PCW, AluSrcB, stype, ltype, ImnSrc,
+output AluControl, InstW, MemW, RegW, PCW, AluSrcB, stype, ltype, ImnSrc, ImmType,
 output [1:0] AluSrcA, ResultSrc
     );
     
@@ -86,6 +86,7 @@ output [1:0] AluSrcA, ResultSrc
     assign ltype = inst[14] & (State == Load); // 0 -> lw, 1 -> lbu
     assign stype = ~inst[13] & (State == Store); // 0 -> sw, 1 -> sb
     assign  ImnSrc = State == Utype;
+    assign ImmType = Opcode[5]&~Opcode[4]; // Para saber que inmediato usar
     
     
 endmodule

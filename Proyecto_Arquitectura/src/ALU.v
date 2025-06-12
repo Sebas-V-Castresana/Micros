@@ -31,9 +31,8 @@ output [31:0] Data_out
     wire [31:0] suma, iand;
     
     assign suma = A + B;
-    // En caso de que se tenga una resta se le sum
     assign iand = A & B;
  
-    assign Data_out = Sel ? suma : iand;
+    assign Data_out = Sel ? iand : suma;
     
 endmodule
