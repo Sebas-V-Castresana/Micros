@@ -66,6 +66,7 @@ output [31:0] out
     reg [31:0] Data_reg;
     wire [31:0] Data;
     
+    // ltype controla si se guarda un word o un byte
     assign Data = ltype ? {24'd0, ReadData[31:24]} : ReadData;
     
     always @(posedge clk)

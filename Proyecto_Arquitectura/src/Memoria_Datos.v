@@ -27,7 +27,7 @@ input [31:0] Data_in,
 output [31:0] Data_out
     );
     
-    // El manejo de que se escriba un word (4 bytes) o 1 byte lo hace la CU
+    // El manejo de que se escriba un word (4 bytes) o 1 byte se hace con stype
 
     // Tamaño max va a ser de 24 bytes
     reg [7:0] Mem [31:0];

@@ -27,6 +27,7 @@ output AluControl, InstW, MemW, RegW, PCW, AluSrcB, stype, ltype, ImnSrc, ImmTyp
 output [1:0] AluSrcA, ResultSrc
     );
     
+    // Estados de la máquina de estados
     parameter Fetch = 4'd0;
     parameter Decode = 4'd1;
     parameter Immediate = 4'd2;
@@ -46,7 +47,7 @@ output [1:0] AluSrcA, ResultSrc
     
     reg [3:0] State;
     wire [3:0] Next;
-    reg [1:0] x;
+    reg [1:0] x;  // Entrada de la máquina
     wire [6:0] Opcode;
     
     assign Opcode = inst[6:0];
@@ -74,14 +75,14 @@ output [1:0] AluSrcA, ResultSrc
     
     // Logica Salidas (Flags)
     assign AluControl = (State == Immediate) & (&inst[14:12]); // 0 -> Suma, 1 -> And
-    assign PCW = State == Fetch;
-    assign InstW = State == Fetch;
-    assign RegW = (State == AluWB) | State[3];
-    assign MemW = State == Store;
-    assign AluSrcB = ~State[3]&~State[2]&~State[1];
-    assign AluSrcA[1] = State == Utype;
+    assign PCW = State == Fetch;  // PC write
+    assign InstW = State == Fetch;  // Instruction write
+    assign RegW = (State == AluWB) | State[3];  // Register write
+    assign MemW = State == Store;  // Mem write
+    assign AluSrcB = ~State[3]&~State[2]&~State[1];  // Control de la entrada de la ALU
+    assign AluSrcA[1] = State == Utype;  // Control de la entrada de la ALU
     assign AluSrcA[0] = ~State[3]&~State[2]&~State[1];
-    assign ResultSrc[0] = State == MemWB;
+    assign ResultSrc[0] = State == MemWB;  // Control muxo de bus de resultado
     assign ResultSrc[1] = ~State[3]&~State[2]&~State[1];
     assign ltype = inst[14] & (State == Load); // 0 -> lw, 1 -> lbu
     assign stype = ~inst[13] & (State == Store); // 0 -> sw, 1 -> sb

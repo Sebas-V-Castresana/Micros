@@ -31,16 +31,18 @@ output [31:0] R1_out, R2_out
     R13, R14, R15, R16, R17, R18, R19, R20, R21, R22, R23, R24, R25,
     R26, R27, R28, R29, R30, R31;
     
+    // Celda para registro 0
     always @ (posedge clk)
     begin
         if (rst)
-            R0 <= 0;
+            R0 <= 0; //reset
         else if ((Addrs3 == 5'd0) & write_enable)
-            R0 <= Data;
+            R0 <= Data;  // Guarda los 4 bytes de entrada
         else
-            R0 <= R0;
+            R0 <= R0;  // Condición de memoria
     end
     
+    // Se repite para los otros 31 registros
     always @ (posedge clk)
     begin
         if (rst)
