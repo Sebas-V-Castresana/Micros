@@ -13,7 +13,7 @@ class ventana(tk.Tk):
         self.geometry('950x700+250+50')
         self.configure(bg='#D9DEDF')
         self.resizable(False, False)
-        self.iconbitmap('Icono.ico')
+        #self.iconbitmap('Icono.ico')
         self.title("Interfaz de Control - Grua")
         self.Start, self.End, self.Gen = self.buttonSetup()
         self.cafe, self.banano, self.pina = self.labelSetup()
@@ -37,6 +37,11 @@ class ventana(tk.Tk):
         Gen = self.buttonMaker('GENERAR', '#1DB8C6', '#1DB8A6', 'black',
                                'black', 250, 500, 2, 20)
 
+        # Eventos
+        self.bind('<Return>', lambda event: Press('START'))
+        self.bind('<Shift-Key-Return>', lambda event: Press('END'))
+        self.bind('<Alt-Key-Return>', lambda event: Press('GENERAR'))
+
         return Start, End, Gen
 
     def labelSetup(self):
@@ -46,14 +51,47 @@ class ventana(tk.Tk):
         titulo.place(x=220, y=50)
 
         # labels cajas
-        cafe = tk.Label(self, font=Font, text='Cajas Cafe: 0',
+        cafe = tk.Label(self, font=Font, text='Cajas Disp.M: 0',
                         bg='#D9DEDF', fg='black')
         banano = tk.Label(self, font=Font, text='Cajas Banano: 0',
                           bg='#D9DEDF', fg='black')
-        pina = tk.Label(self, font=Font, text='Cajas Piña: 0',
+        pina = tk.Label(self, font=Font, text='Cajas Cafe 0',
                         bg='#D9DEDF', fg='black')
         cafe.place(x=650, y=650)
         banano.place(x=325, y=650)
         pina.place(x=50, y=650)
 
         return cafe, banano, pina
+
+
+def Press(boton, master):
+    if boton == 'START':
+        print('EMPEZAR FUNCION')
+        master.Start.configure(bg='#77EA60', fg='#26B210')
+        master.End.configure(bg='#1DB8C6', fg='black')
+        master.update()
+
+    elif boton == 'END':
+        print('TERMINAR FUNCION')
+        master.End.configure(bg='#FC6666', fg='#FF3535')
+        master.Start.configure(bg='#1DB8C6', fg='black')
+        master.update()
+
+    elif boton == 'GENERAR':
+        print('GENERAR INFORME')
+
+
+def CountUpdate(source, cantidad):
+    match(source):
+        case 'cafe':
+            cafe = 'Cajas Cafe: ' + str(cantidad)
+            global Cajas_Cafe
+            Cajas_Cafe.set(cafe)
+        case 'banano':
+            banano = 'Cajas Banano: ' + str(cantidad)
+            global Cajas_Banano
+            Cajas_Banano.set(banano)
+        case 'pina':
+            pina = 'Cajas Disp.M: ' + str(cantidad)
+            global Cajas_Pina
+            Cajas_Pina.set(pina)
